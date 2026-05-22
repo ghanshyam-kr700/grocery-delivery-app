@@ -3,6 +3,7 @@ import Banner from "../Components/Banner"
 import Navbar from "../Components/Navbar"
 import Footer from "../Components/Home/Footer"
 import CartSidebar from "../Components/CartSidebar"
+// import CartSidebar from "../Components/CartSidebar"
 
 
 
@@ -15,6 +16,7 @@ const AppLayOut = () => {
         <Outlet/>
     </main>
     <Footer/>
+    {/* <CartSidebar/> */}
     <CartSidebar/>
 
     </>

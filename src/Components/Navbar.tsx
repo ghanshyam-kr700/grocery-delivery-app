@@ -1,6 +1,7 @@
 import { ArrowUpRightIcon, BikeIcon, ChevronDown, LogOutIcon, MapIcon, MenuIcon, PackageIcon, SearchIcon, ShieldIcon, ShoppingCartIcon, UserIcon, XIcon } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 
 const Navbar = () => {
     const user: any = {
@@ -9,10 +10,7 @@ const Navbar = () => {
         isAdmin: true,
     };
 
-    const { cartCount, setIsCartOpen } = {
-        cartCount: 5,
-        setIsCartOpen: (__data: any) => { },
-    };
+    const { cartCount, setIsCartOpen } = useCart()
 
     const [searchQuery, setSearchQuery] = useState("");
     const [userMenuOpen, setUserMenuOpen] = useState(false);
@@ -25,6 +23,7 @@ const Navbar = () => {
         if (searchQuery.trim()) {
             navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
             setSearchQuery("");
+
         }
     };
 
