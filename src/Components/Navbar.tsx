@@ -7,9 +7,9 @@ const Navbar = () => {
     const user: any = {
         name: "johndoe",
         email: "john@example.com",
-        isAdmin: true,
-    };
-
+       isAdmin: true,
+    };    
+    
     const { cartCount, setIsCartOpen } = useCart()
 
     const [searchQuery, setSearchQuery] = useState("");
