@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import type { Product } from "../types";
 import { dummyProducts } from "../assets/assets";
 import Loading from "../Components/Loading";
-import { HomeIcon } from "lucide-react";
+import { ArrowLeftIcon, HomeIcon, LeafIcon, StarIcon } from "lucide-react";
 
 const ProductPage = () => {
   const currency = import.meta.env.VITE_CURRENCY_SYMBOL || "$";
@@ -96,10 +96,112 @@ const ProductPage = () => {
           </span>
 
         </nav>
+        {/* black button  */}
+        <button onClick={() => navigate(-1)} className="mb-6 flex items-center gap-1.5 text-sm text-app-text-light hover:text-app-green transition-colors">
+          <ArrowLeftIcon className="size-4" /> Back
+        </button>
+
+        {/* Product detail section  */}
+        <div className="bg-white/50 rounded-2xl overflow-hidden">
+          <div className="grid md:grid-cols-2 gap-0">
+
+            {/* Left side image */}
+            <div className="relative flex items-center justify-center p-8 md:p-12 min-h-[320px] md:min-h-[480px]">
+
+              <img
+                src={product.image}
+                alt={product.name}
+                className="max-h-[360px] w-auto object-contain"
+              />
+              {/* Badges  */}
+              <div className="absolute top-5 left-5 flex flex-wrap gap-1.5">
+                {product.isOrganic && (
+                  <span className="flex items-center gap-1 px-2.5 py-1 text-xs font-semibold bg-app-green text-white rounded-full">
+                    <LeafIcon className="w-3 h-3" />
+                    Organic
+                  </span>
+                )}
+                {product.discount > 0 && (
+                  <span className="px-2.5 py-1 text-xs font-semibold bg-app-orange text-white rounded-full "
+                  >
+                    {product.discount}% OFF
+
+                  </span>
+                )
+
+                }
+
+              </div>
+            </div>
+
+            {/* Right side details  */}
+            <div className="p-6 md:p-10 flex flex-col justify-center">
+              <span className="text-xs font-medium text-app-text-light tracking-wider mb-2 capitalize">{categoryLabel}</span>
+              <h1 className="text-2xl md:text-3xl font-semibold text-app-green mb-3 ">{product.name}</h1>
+              {/* rating */}
+              {product.rating > 0 && (
+                <div className="flex items-center gap-2 mb-5">
+                  <div className="flex items-center gap-0.5">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <StarIcon
+                        key={star}
+                        className={`w-4 h-4 ${star <= Math.round(product.rating) ? "text-app-warning fill-app-warning" : "text-app-border"}`}
+                      />
+                    ))}
+
+                  </div>
+                  <span className="text-sm font-medium">{product.rating}</span>
+                  <span className="text-sm text-app-text-light">({product.reviewCount} reviews)</span>
+                </div>
+              )}
+
+              {/* Price  */}
+              <div className="flex items-baseline gap-3 mb-5">
+                <span className="text-3xl md:text-4xl font-semibold text-app-green">
+                  {currency}{product.price.toFixed(2)}
+                </span>
+                {product.originalPrice > product.price && (
+                  <span className="text-lg text-app-text-light line-through">{currency} {product.originalPrice.toFixed(2)}</span>
+                )}
+              </div>
+
+              {/* Description  */}
+              <p className="text-sm text-app-text-light leading-relaxed mb-6"
+              >{product.description}</p>
+
+              {/* stock  */}
+              <div className="mb-6">
+                {product.stock > 0 ? (
+                  <span className="text-sm text-app-success">✓ In stock ({product.stock}availble)</span>
+                ) : (
+                  <span className="text-sm text-app-error font-medium">Out of stock </span>
+                )}
+              </div>
+              {/* quantity + Add to cart  */}
+              <div className="flex items-center gap-3">
+                {/* Quantity  */}
+                
+                <div>
+                  {/*Add to cart   */}
+                  <button>
+
+                  </button>
+                </div>
+              </div>
+
+
+
+            </div>
+
+          </div>
+        </div>
+        {/* Customer reviews  */}
+
+        {/* Related products  */}
 
       </div>
     </div>
   );
 };
 
-export default ProductPage;n
+export default ProductPage;

@@ -14,7 +14,7 @@ const Products = () => {
   const [totalPages, setTotalPages] = useState(1);
 
   const [loading, setLoading] = useState(true);
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [mobileFiFltersOpen, setMobileFiltersOpen] = useState(false);
 
   const category = searchParams.get("category") || "";
   const organic = searchParams.get("organic") || "";

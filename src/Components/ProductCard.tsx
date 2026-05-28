@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import type { Product } from "../types";
 import { Plus, Star } from "lucide-react";
 import { useCart } from "../context/CartContext";
+import Products from "../pages/Product";
 
 interface Props {
     product: Product;
@@ -20,7 +21,7 @@ const ProductCard = ({ product }: Props) => {
             className="bg-white rounded-2xl overflow-hidden shadow hover:shadow-md 
             transition-all duration-300 group animate-fade-in cursor-pointer"
 
-            onClick={() => navigate(`/product/${product._id}`)}
+            onClick={() => navigate(`/products/${product._id}`)}
         >
             {/* Images */}
             <div className="relative aspect-square overflow-hidden">
