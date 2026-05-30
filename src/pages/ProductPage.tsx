@@ -23,7 +23,7 @@ const ProductPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { items, addToCart, updateQuantity } = useCart();
+  const { items, addToCart, updateQuantity, removeFromCart } = useCart();
 
   const [product, setProduct] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
