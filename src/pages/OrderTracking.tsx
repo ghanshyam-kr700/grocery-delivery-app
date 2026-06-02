@@ -2,12 +2,16 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { dummyDashboardOrdersData } from "../assets/assets";
 import Loading from "../Components/Loading";
-import { ArrowLeftIcon } from "lucide-react";
+import { ArrowLeftIcon, MapIcon, PhoneIcon } from "lucide-react";
 import OrderOTP from "../Components/OrderRecords/OrderOTP";
+import LiveMap from "../Components/OrderRecords/LiveMap";
+import OrderTimeLine from "../Components/OrderRecords/OrderTimeLine";
 // import { dummyDashboardData } from "../assets/assets";
 // import type { Order } from "../types";
 
 const OrderTracking = () => {
+
+  const currency = import.meta.env.VITE_CURRENCY_SYMBOL || "$";
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -74,11 +78,110 @@ const OrderTracking = () => {
           <div className="lg:col-span-2 space-y-6">
             {/* OTP Card  */}
             <OrderOTP order={order} />
+            {/* Live tracking map  */}
 
+            <LiveMap order={order} liveLocation={liveLocation} />
 
+            {/* Progress Timeline  */}
+
+            {/* <OrderTimeLine order={order} /> */}
+            {/* Delivery person  */}
+            {/* Progress Timeline  */}
+            <OrderTimeLine order={order} />
+
+            {/* Delivery person  */}
+            {order?.deliveryPartner &&
+              order.status !== "Delivered" &&
+              order.status !== "Cancelled" && (
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="size-11 rounded-full bg-app-green flex-center">
+                      <span className="text-white font-semibold text-sm">
+                        {order.deliveryPartner.name.charAt(0)}
+                      </span>
+                    </div>
+
+                    <div>
+                      <p className="text-sm font-semibold text-app-green">
+                        {order.deliveryPartner.name}
+                      </p>
+                      <p className="text-xs text-app-text-light capitalize">
+                        {order.deliveryPartner.vehicleType} · Delivery
+                      </p>
+                    </div>
+                  </div>
+
+                  <a
+                    href={`tel:${order.deliveryPartner.phone}`}
+                    className="p-2.5 bg-app-cream rounded-xl hover:bg-app-cream-dark transition-colors"
+                  >
+                    <PhoneIcon className="size-4 text-app-green" />
+                  </a>
+                </div>
+              )}
           </div>
-          {/*Right side - order Details  */}
+          {/* Right side -order details */}
+          <div className="space-y-5">
+            {/* Delivery Adress */}
+            <div className="bg-white rounded-2xl p-5">
+              <h3 className="text-sm font-semibold text-app-green mb-3 flex items-center gap-2">
+                <MapIcon className="size-4" />
+                Delivery Address
+              </h3>
 
+              <p className="text-sm text-app-text-light leading-relaxed">
+                {order?.shippingAddress?.label}
+                <br />
+                {order?.shippingAddress?.address}
+                <br />
+                {order?.shippingAddress?.city}, {order?.shippingAddress?.state}{" "}
+                {order?.shippingAddress?.zip}
+              </p>
+            </div>
+            {/* Items */}
+            <div className="bg-white rounded-2xl">
+              <h3 className="text-sm font-semibold text-app-green mb-3">Items ({order?.items.length})</h3>
+
+              <div>
+                {order?.items?.map((item, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="size-10 rounded-lg object-cover"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-app-green truncate">
+                        {item.name}
+
+                      </p>
+                      <p className="text-xs text-app-text-light">
+                        x{item.quantity}
+                      </p>
+                    </div>
+                    <span>{currency}{(item.price * item.quantity).toFixed(2)}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-4 border-t border-app-border space-y-1 5 text-sm">
+                <div className="flex justify-between">
+                  <span>Subtotal</span>
+                  <span>{currency}{order?.Subtotal.toFixed(2)}</span>
+                </div>
+
+                <div className="flex justify-between">
+                  <span className="text-app-text-light">Delivery</span>
+                  <span>
+                    {order?.deliveryFee === 0
+                      ? "Free"
+                      : `${currency}{order?.deliveyFee.toFixed}`}
+                    {currency}{order?.Subtotal.toFixed(2)}
+                  </span>
+                </div>
+
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
