@@ -6,8 +6,6 @@ import { ArrowLeftIcon, MapIcon, PhoneIcon } from "lucide-react";
 import OrderOTP from "../Components/OrderRecords/OrderOTP";
 import LiveMap from "../Components/OrderRecords/LiveMap";
 import OrderTimeLine from "../Components/OrderRecords/OrderTimeLine";
-// import { dummyDashboardData } from "../assets/assets";
-// import type { Order } from "../types";
 
 const OrderTracking = () => {
 
@@ -25,7 +23,6 @@ const OrderTracking = () => {
 
   useEffect(() => {
     setOrder(dummyDashboardOrdersData.find((o) => o._id === id) as any);
-
     setLoading(false);
   }, [id]);
 
@@ -44,7 +41,7 @@ const OrderTracking = () => {
           Back to orders
         </button>
 
-        {/* order id,date, status */}
+        {/* order id, date, status */}
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-2xl font-semibold text-app-green">
@@ -64,7 +61,7 @@ const OrderTracking = () => {
           <span
             className={`px-4 text-sm font-semibold rounded-full ${order.status === "Delivered"
               ? "bg-green-100 text-green-700"
-              : order.status === "cancelled"
+              : order.status === "Cancelled"
                 ? "bg-red-100 text-red-700"
                 : "bg-app-orange/10 text-app-orange"
               }`}
@@ -74,22 +71,18 @@ const OrderTracking = () => {
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6">
-          {/*Lefft site  Timeline + map Area  */}
+          {/* Left side - Timeline + map Area */}
           <div className="lg:col-span-2 space-y-6">
-            {/* OTP Card  */}
+            {/* OTP Card */}
             <OrderOTP order={order} />
-            {/* Live tracking map  */}
 
+            {/* Live tracking map */}
             <LiveMap order={order} liveLocation={liveLocation} />
 
-            {/* Progress Timeline  */}
-
-            {/* <OrderTimeLine order={order} /> */}
-            {/* Delivery person  */}
-            {/* Progress Timeline  */}
+            {/* Progress Timeline */}
             <OrderTimeLine order={order} />
 
-            {/* Delivery person  */}
+            {/* Delivery person */}
             {order?.deliveryPartner &&
               order.status !== "Delivered" &&
               order.status !== "Cancelled" && (
@@ -120,9 +113,10 @@ const OrderTracking = () => {
                 </div>
               )}
           </div>
-          {/* Right side -order details */}
+
+          {/* Right side - order details */}
           <div className="space-y-5">
-            {/* Delivery Adress */}
+            {/* Delivery Address */}
             <div className="bg-white rounded-2xl p-5">
               <h3 className="text-sm font-semibold text-app-green mb-3 flex items-center gap-2">
                 <MapIcon className="size-4" />
@@ -138,12 +132,15 @@ const OrderTracking = () => {
                 {order?.shippingAddress?.zip}
               </p>
             </div>
-            {/* Items */}
-            <div className="bg-white rounded-2xl">
-              <h3 className="text-sm font-semibold text-app-green mb-3">Items ({order?.items.length})</h3>
 
-              <div>
-                {order?.items?.map((item, i) => (
+            {/* Items */}
+            <div className="bg-white rounded-2xl p-5">
+              <h3 className="text-sm font-semibold text-app-green mb-3">
+                Items ({order?.items.length})
+              </h3>
+
+              <div className="space-y-3">
+                {order?.items?.map((item: any, i: number) => (
                   <div key={i} className="flex items-center gap-3">
                     <img
                       src={item.image}
@@ -153,20 +150,22 @@ const OrderTracking = () => {
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-app-green truncate">
                         {item.name}
-
                       </p>
                       <p className="text-xs text-app-text-light">
                         x{item.quantity}
                       </p>
                     </div>
-                    <span>{currency}{(item.price * item.quantity).toFixed(2)}</span>
+                    <span className="text-sm">
+                      {currency}{(item.price * item.quantity).toFixed(2)}
+                    </span>
                   </div>
                 ))}
               </div>
-              <div className="mt-4 border-t border-app-border space-y-1 5 text-sm">
+
+              <div className="mt-4 border-t border-app-border space-y-1.5 text-sm pt-3">
                 <div className="flex justify-between">
                   <span>Subtotal</span>
-                  <span>{currency}{order?.Subtotal.toFixed(2)}</span>
+                  <span>{currency}{order?.subtotal.toFixed(2)}</span>
                 </div>
 
                 <div className="flex justify-between">
@@ -174,8 +173,21 @@ const OrderTracking = () => {
                   <span>
                     {order?.deliveryFee === 0
                       ? "Free"
-                      : `${currency}{order?.deliveyFee.toFixed}`}
-                    {currency}{order?.Subtotal.toFixed(2)}
+                      : `${currency}${order?.deliveryFee.toFixed(2)}`}
+                  </span>
+                </div>
+
+                <div className="flex justify-between">
+                  <span className="text-app-text-light">Tax</span>
+                  <span>
+                    {currency}{order?.tax.toFixed(2)}
+                  </span>
+                </div>
+
+                <div className="flex justify-between pt-2 border-t border-app-border font-semibold text-app-green">
+                  <span>Total</span>
+                  <span>
+                    {currency}{order?.total.toFixed(2)}
                   </span>
                 </div>
 
