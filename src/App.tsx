@@ -55,7 +55,7 @@ const App = () => {
 
             <Route path="orders/:id" element={<OrderTracking />} />
 
-            <Route path="sdresses" element={<Adresses />} />
+            <Route path="/addresses" element={<Adresses />} />
 
           </Route>
 
