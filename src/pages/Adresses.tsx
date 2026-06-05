@@ -1,110 +1,162 @@
-import { useState, useEffect } from "react"
-import type { Address } from "../types"
-import { dummyAddressData } from "../assets/assets"
-import { MapIcon, PlusIcon } from "lucide-react"
-import Loading from "../Components/Loading"
-import AdressCard from "../Components/AdressCard"
-import AdressForm from "../Components/AdressForm"
+import { XIcon } from "lucide-react";
+
+const AdressForm = ({ resetForm, handleSubmit, form, setForm, editingId }: any) => {
+    return (
+        <>
+            {/* overlay */}
+            <div className="fixed inset-0 bg-black/40 z-50">
+                {/* form container */}
+                <div onClick={resetForm} className="fixed inset-0 z-50 flex-center p-4">
+                    <form
+                        onClick={(e) => e.stopPropagation()}
+                        onSubmit={handleSubmit}
+                        className="bg-white rounded-2xl p-6 w-full max-w-lg animate-fade-in"
+                        action=""
+                    >
+                        {/* form header */}
+                        <div>
+                            <h2 className="text-lg font-semibold text-app-green">
+                                {editingId ? "edit Adress" : "Add New Adress"}
+                            </h2>
+                            <button
+                                type="button"
+                                onClick={resetForm}
+                                className="p-2 hover:bg-app-cream rounded-lg"
+                            >
+                                <XIcon className="size-5" />
+                            </button>
+                        </div>
+
+                        {/* form input field */}
+                        <div className="space-y-4">
+                            <div>
+                                <label className="block text-sm font-medium text-app-green mb-1.5">
+                                    Label
+                                </label>
+                                <input
+                                    type="text"
+                                    placeholder="Home ,work,etc."
+                                    required
+                                    className="w-full px-4 py-2.5 text-sm rounded-xl border border-app-border focus:border-app-green outline-none"
+                                    value={form.label}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            label: e.target.value,
+                                        })
+                                    }
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-app-green mb-1.5">
+                                    Street Address
+                                </label>
+
+                                <input
+                                    type="text"
+                                    required
+                                    className="w-full px-4 py-2.5 text-sm rounded-xl border border-app-border focus:border-app-green outline-none"
+                                    value={form.address}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            address: e.target.value,
+                                        })
+                                    }
+                                />
+                            </div>
+                            <div className="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label className="block text-sm font-medium text-app-green mb-1.5">
+                                        City
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        required
+                                        className="w-full px-4 py-2.5 text-sm rounded-xl border border-app-border focus:border-app-green outline-none"
+                                        value={form.city}
+                                        onChange={(e) =>
+                                            setForm({
+                                                ...form,
+                                                city: e.target.value,
+                                            })
+                                        }
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-app-green mb-1.5">
+                                        state
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        required
+                                        className="w-full px-4 py-2.5 text-sm rounded-xl border border-app-border focus:border-app-green outline-none"
+                                        value={form.state}
+                                        onChange={(e) =>
+                                            setForm({
+                                                ...form,
+                                                state: e.target.value,
+                                            })
+                                        }
+                                    />
+                                </div>
+
+                            </div>
+                            <div className="grid grid-cols-2 gap-3">
+
+                                <div>
+                                    <label className="block text-sm font-medium text-app-green mb-1.5">
+                                        zip code
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        required
+                                        className="w-full px-4 py-2.5 text-sm rounded-xl border border-app-border focus:border-app-green outline-none"
+                                        value={form.zip}
+                                        onChange={(e) =>
+                                            setForm({
+                                                ...form,
+                                                zip: e.target.value,
+                                            })
+                                        }
+                                    />
+                                </div>
+                                <div className="flex items-end pb-1">
+                                    <label className="flex items-center gap-2 cursor-pointer">
+                                        <input
+                                            type="checkbox"
+                                            checked={form.isDefault}
+                                            onChange={(e) =>
+                                                setForm({
+                                                    ...form,
+                                                    isDefault: e.target.checked,
+                                                })
+                                            }
+                                        />
+                                        <span className="text-app-text-light">Set as default</span>
+                                    </label>
 
 
-const Adresses = () => {
 
-  const [address, setAddresses] = useState<Address[]>([])
-  const [loading, setLoading] = useState(true)
-  const [showForm, setShowForm] = useState(false)
-  const [editingId, seteditingId] = useState<string | null>(null)
-  const [form, setForm] = useState({
-    label: "",
-    address: "",
-    city: "",
-    state: "",
-    zip: "",
-    isDefault: false
-  })
+                                </div>
 
-  const resetForm = () => {
-    setForm({
-      label: "",
-      address: "",
-      city: "",
-      state: "",
-      zip: "",
-      isDefault: false,
-    });
-    setShowForm(false)
-    seteditingId(null)
-  };
+                            </div>
+                        </div>
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-  }
+                        {/* submit button */}
+                        <button type="submit" className="mt-6 w-full py-3 bg-app-green text-white font-semibold rounded-xl hover:bg-app-green-light transition-colors">
+                            {editingId ?"update Adress" : "save Adress"}
 
-  const onEditHandler = (add: Address) => {
-    setForm({
-      label: add.label,
-      address: add.address,
-      city: add.city,
-      state: add.state,
-      zip: add.zip,
-      isDefault: add.isDefault,
-    })
-    seteditingId(add._id)
-    setShowForm(true)
-  }
-
-  useEffect(() => {
-    setAddresses(dummyAddressData)
-    setTimeout(() => setLoading(false), 1000)
-  }, [])
-
-
-  return (
-    <div className="min-h-screen bg-app-cream">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* page header */}
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="text-2xl font-semibold text-app-green">My Addresses</h1>
-          <button
-            onClick={() => {
-              resetForm();
-              setShowForm(true);
-            }}
-            className="px-4 py-2 bg-app-green text-white text-sm font-semibold rounded-xl hover:bg-app-green-light transition-colors flex items-center gap-2"
-          >
-            <PlusIcon className="size-4" /> Add Adresses
-          </button>
-        </div>
-        {/* Form modal */}
-        {showForm && <AdressForm resetForm={resetForm} handleSubmit={handleSubmit} form={form} setForm={setForm} editingId={editingId}/> }
-
-
-        {/*Adresses list  */}
-
-        {
-          loading?(
-            <Loading/>
-          ): address.length === 0?(
-            <div className="text-center py-16">
-              <MapIcon className="size-16 text-app-border mx-auto mb-4"/>
-              <h2 className="text-lg font-semibold text-app-green mb-2">No adresses</h2>
-              <p className="text-sm text-app-text-light "> Add an adress for faster checkout</p>
-
+                        </button>
+                    </form>
+                </div>
             </div>
-          ):(
-            <div className="space-y-4 ">
-              {address.map((addr)=>(
-                <AdressCard key={addr._id} addr={addr} 
-                onEditHandler={onEditHandler} setAddresses={setAddresses}/>
-              ))}
+        </>
+    );
+};
 
-            </div>
-          )
-        }
-
-      </div>
-
-    </div>
-  )
-}
-
-export default Adresses
+export default AdressForm;
