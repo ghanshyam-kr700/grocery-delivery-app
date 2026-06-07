@@ -13,6 +13,8 @@ import MyOrder from "./pages/MyOrder";
 import OrderTracking from "./pages/OrderTracking";
 import Adresses from "./pages/Adresses";
 import ProtectedRoute from "./Components/ProtectedRoute";
+import AdminLayout from "./pages/Admin/AdminLayout";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
 
 const App = () => {
   return (
@@ -58,9 +60,11 @@ const App = () => {
             <Route path="/addresses" element={<Adresses />} />
 
           </Route>
-
-
         </Route>
+        {/* Admin pages */}
+        <Route path="/admin" element={<AdminLayout />}>
+  <Route index element={<AdminDashboard />} />
+</Route>
       </Routes>
     </>
   );
