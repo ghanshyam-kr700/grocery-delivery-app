@@ -4,7 +4,7 @@ const FilterPanel = ({
     minPrice,
     maxPrice,
     updateFilter,
-    clearFilter,
+    clearFilters,  // ✅ clearFilter → clearFilters
     hasFilters,
 }: any) => {
 
@@ -66,7 +66,7 @@ const FilterPanel = ({
 
             {hasFilters && (
                 <button
-                    onClick={clearFilter}
+                    onClick={clearFilters}
                     className="w-full py-2 text-sm text-app-error hover:bg-red-50 rounded-lg transition-colors font-medium"
                 >
                     Clear All Filters
