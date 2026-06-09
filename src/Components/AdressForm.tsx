@@ -1,5 +1,6 @@
 import { XIcon } from "lucide-react";
 
+
 const AdressForm = ({ resetForm, handleSubmit, form, setForm, editingId }: any) => {
     return (
         <div className="fixed inset-0 bg-black/40 z-50">
@@ -9,7 +10,7 @@ const AdressForm = ({ resetForm, handleSubmit, form, setForm, editingId }: any) 
                     onSubmit={handleSubmit}
                     className="bg-white rounded-2xl p-6 w-full max-w-lg animate-fade-in"
                 >
-                    {/* ✅ Fix 4: flex justify-between add kiya */}
+                    {/*  Fix 4: flex justify-between add kiya */}
                     <div className="flex items-center justify-between mb-6">
                         <h2 className="text-lg font-semibold text-app-green">
                             {editingId ? "Edit Address" : "Add New Address"}

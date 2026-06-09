@@ -4,7 +4,7 @@ import { dummyAddressData } from "../assets/assets"
 import { MapIcon, PlusIcon } from "lucide-react"
 import Loading from "../Components/Loading";
 import AdressCard from "../Components/AdressCard";
-import AdressForm from "../Components/AdressForm"; // ← import add karo
+import AdressForm from "../Components/AdressForm"; 
 
 const Adresses = () => {
 
@@ -14,7 +14,7 @@ const Adresses = () => {
     const [editingId, setEditingId] = useState<string | null>(null)
     const [form, setForm] = useState({
         label: "",
-        address: "",   // ✅ Fix 1: adress → address
+        address: "",   
         city: "",
         state: "",
         zip: "",
@@ -24,7 +24,7 @@ const Adresses = () => {
     const resetForm = () => {
         setForm({
             label: "",
-            address: "",   // ✅ Fix 1
+            address: "",   
             city: "",
             state: "",
             zip: "",
@@ -34,7 +34,7 @@ const Adresses = () => {
         setEditingId(null)
     }
 
-    // ✅ Fix 2: React.SubmitEvent → React.FormEvent<HTMLFormElement>
+    
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
     }
@@ -73,7 +73,6 @@ const Adresses = () => {
                     </button>
                 </div>
 
-                {/* ✅ Fix 3: Form modal ab render hoga */}
                 {showForm && (
                     <AdressForm
                         resetForm={resetForm}
