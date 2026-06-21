@@ -1,5 +1,4 @@
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
-import { MapPinIcon } from "lucide-react";
 import { iconsForLeafpad } from "../../assets/assets";
 import L from "leaflet";
 import { useEffect } from "react";

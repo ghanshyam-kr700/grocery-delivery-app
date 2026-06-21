@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { TruckIcon } from "lucide-react";
 import toast from "react-hot-toast";
 import type { DeliveryPartner } from "../../types";
-import Loading from "../../components/Loading";
+import Loading from "../../Components/Loading";
 import { dummyDashboardOrdersData, dummyDeliveryPartnerData } from "../../assets/assets";
 
 export default function AdminOrders() {

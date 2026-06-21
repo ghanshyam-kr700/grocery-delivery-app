@@ -4,7 +4,7 @@ import { dummyAddressData } from "../assets/assets"
 import { MapIcon, PlusIcon } from "lucide-react"
 import Loading from "../Components/Loading";
 import AdressCard from "../Components/AdressCard";
-import AdressForm from "../Components/AdressForm"; 
+import AdressForm from "../Components/AdressForm";
 
 const Adresses = () => {
 
@@ -14,7 +14,7 @@ const Adresses = () => {
     const [editingId, setEditingId] = useState<string | null>(null)
     const [form, setForm] = useState({
         label: "",
-        address: "",   
+        address: "",
         city: "",
         state: "",
         zip: "",
@@ -24,7 +24,7 @@ const Adresses = () => {
     const resetForm = () => {
         setForm({
             label: "",
-            address: "",   
+            address: "",
             city: "",
             state: "",
             zip: "",
@@ -34,7 +34,7 @@ const Adresses = () => {
         setEditingId(null)
     }
 
-    
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
     }
@@ -99,6 +99,7 @@ const Adresses = () => {
                                 addr={addr}
                                 onEditHandler={onEditHandler}
                                 setAddresses={setAddresses}
+                                addresses={addresses}
                             />
                         ))}
                     </div>

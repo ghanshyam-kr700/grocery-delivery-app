@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import type { Product as ProductType } from '../types';
 import { categoriesData, dummyProducts } from '../assets/assets';
@@ -10,9 +10,9 @@ import FilterPanel from '../Components/FilterPanel';
 const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [products, setProducts] = useState<ProductType[]>([])
-  const [totalPages, setTotalPages] = useState(1)
   const [loading, setLoading] = useState(true);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+  const [totalPages] = useState(1)
 
   const category = searchParams.get("category") || "";
   const organic = searchParams.get("organic") || ""
